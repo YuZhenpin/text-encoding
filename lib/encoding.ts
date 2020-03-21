@@ -37,7 +37,7 @@ var floor = Math.floor;
 function ToDictionary(o: any): any {
   if (o === undefined) return {};
   if (o === Object(o)) return o;
-  throw TypeError('Could not convert argument to dictionary');
+  throw new TypeError('Could not convert argument to dictionary');
 }
 
 /**
@@ -264,7 +264,7 @@ var finished = -1;
  */
 function decoderError(fatal: boolean, opt_code_point: number = 0): number {
   if (fatal)
-    throw TypeError('Decoder error');
+    throw new TypeError('Decoder error');
   return opt_code_point || 0xFFFD;
 }
 
@@ -273,7 +273,7 @@ function decoderError(fatal: boolean, opt_code_point: number = 0): number {
  * @return {number} Always throws, no value is actually returned.
  */
 function encoderError(code_point: number): number {
-  throw TypeError('The code point ' + code_point + ' could not be encoded.');
+  throw new TypeError('The code point ' + code_point + ' could not be encoded.');
 }
 
 /** @interface */
@@ -979,7 +979,7 @@ export class TextDecoder extends Decoder {
     super();
     // Web IDL conventions
     if (!(this instanceof TextDecoder))
-      throw TypeError('Called as a function. Did you forget \'new\'?');
+      throw new TypeError('Called as a function. Did you forget \'new\'?');
     label = label !== undefined ? String(label) : DEFAULT_ENCODING;
     options = ToDictionary(options);
 
@@ -1008,9 +1008,9 @@ export class TextDecoder extends Decoder {
 
     // 2. If encoding is failure or replacement, throw a RangeError.
     if (encoding === null || encoding.name === 'replacement')
-      throw RangeError('Unknown encoding: ' + label);
+      throw new RangeError('Unknown encoding: ' + label);
     if (!decoders[encoding.name]) {
-      throw Error('Decoder not present.' +
+      throw new Error('Decoder not present.' +
         ' Did you forget to include encoding-indexes.ts first?');
     }
 
@@ -1203,9 +1203,9 @@ export class CustomTextEncoder extends Encoder {
       label = label !== undefined ? String(label) : DEFAULT_ENCODING;
       var encoding = getEncoding(label);
       if (encoding === null || encoding.name === 'replacement')
-        throw RangeError('Unknown encoding: ' + label);
+        throw new RangeError('Unknown encoding: ' + label);
       if (!encoders[encoding.name]) {
-        throw Error('Encoder not present.' +
+        throw new Error('Encoder not present.' +
           ' Did you forget to include encoding-indexes.ts first?');
       }
       enc._encoding = encoding;
