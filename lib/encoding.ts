@@ -1040,7 +1040,7 @@ export class TextDecoder extends Decoder {
    * @param {Object=} options
    * @return {string} The decoded string.
    */
-  decode(input: BufferSource, options: any): string {
+  public decode(input: BufferSource, options: any= {}): string {
     var bytes;
     if (typeof input === 'object' && input instanceof ArrayBuffer) {
       bytes = new Uint8Array(input);
@@ -1166,7 +1166,7 @@ export class TextDecoder extends Decoder {
 }
 // 8.2 Interface TextEncoder
 
-export class TextEncoder extends Encoder {
+export class CustomTextEncoder extends Encoder {
   private _encoding: any;
   private _do_not_flush: any;
   private _encoder: any;
@@ -1176,11 +1176,9 @@ export class TextEncoder extends Encoder {
    * @param {string=} label The label of the encoding. NONSTANDARD.
    * @param {Object=} options NONSTANDARD.
    */
-  constructor(label: string, options: any) {
+  constructor(label: string, options: any = {}) {
     super();
     // Web IDL conventions
-    if (!(this instanceof TextEncoder))
-      throw TypeError('Called as a function. Did you forget \'new\'?');
     options = ToDictionary(options);
 
     // A TextEncoder object has an associated encoding and encoder.
@@ -1225,7 +1223,7 @@ export class TextEncoder extends Encoder {
    * @param {Object=} options
    * @return {!Uint8Array} Encoded bytes, as a Uint8Array.
    */
-  encode(opt_string: string, options: any): Uint8Array {
+  public encode(opt_string: string, options: any = {}): Uint8Array {
     opt_string = opt_string === undefined ? '' : String(opt_string);
     options = ToDictionary(options);
 
